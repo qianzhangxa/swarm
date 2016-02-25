@@ -50,6 +50,15 @@ const (
 	defaultOfferTimeout        = 30 * time.Second
 	defaultRefuseTimeout       = 5 * time.Second
 	defaultTaskCreationTimeout = 5 * time.Second
+	engineResourceType         = "res_type"
+)
+
+// Resource types for engine.
+const (
+	regularResourceOnly   = "regular"
+	revocableResourceOnly = "revocable"
+	mixedResource         = "any"
+	unknownResource       = "unknown"
 )
 
 var (
