@@ -140,6 +140,15 @@ func NewCluster(scheduler *scheduler.Scheduler, TLSConfig *tls.Config, master st
 		cluster.refuseTimeout = d
 	}
 
+	if enableRevocable, ok := options.Bool("mesos.enablerevocable", "SWARM_MESOS_ENABLE_REVOCABLE"); ok {
+		if enableRevocable {
+			driverConfig.Framework.Capabilities = make([]*mesosproto.FrameworkInfo_Capability, 1)
+			driverConfig.Framework.Capabilities[0] = &mesosproto.FrameworkInfo_Capability{
+				Type: mesosproto.FrameworkInfo_Capability_REVOCABLE_RESOURCES.Enum(),
+			}
+		}
+	}
+
 	sched, err := NewScheduler(driverConfig, cluster, scheduler)
 	if err != nil {
 		return nil, err
